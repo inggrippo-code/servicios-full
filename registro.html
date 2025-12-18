@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Servicios Full</title>
+    <style>
+        body { background-color: #1a1a1a; color: white; font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        .orange { color: #ffa500; }
+        .form-box { background: #262626; padding: 20px; border-radius: 10px; display: inline-block; width: 90%; max-width: 450px; border: 1px solid #333; }
+        input, textarea { display: block; margin: 10px auto; padding: 12px; width: 90%; border-radius: 5px; border: none; background: #333; color: white; }
+        .btn-registro { background: #ffa500; color: black; border: none; padding: 15px; width: 95%; font-weight: bold; border-radius: 5px; cursor: pointer; margin-top: 10px; }
+        .alerta-seguridad { background: #331a00; border: 1px dashed #ffa500; padding: 15px; margin-bottom: 20px; border-radius: 5px; font-size: 14px; text-align: left; }
+    </style>
+</head>
+<body>
+    <h1 class="orange">Registro de Expertos</h1>
+    
+    <div class="form-box">
+        <div class="alerta-seguridad">
+            <strong style="color: #ffa500;">⚠️ REQUISITO PARA EL SELLO DE CONFIANZA:</strong><br><br>
+            Para obtener el <b>Sello de Identidad Verificada</b> (Verde), una vez finalizado este registro deberá enviar por WhatsApp al administrador:
+            <ul style="margin-top: 10px;">
+                <li>Foto de DNI (Frente y Dorso)</li>
+                <li>Una selfie con su DNI en la mano</li>
+            </ul>
+            <i>Su perfil nacerá en estado "Pendiente" hasta que verifiquemos estos datos.</i>
+        </div>
+
+        <input type="text" id="nombre" placeholder="Nombre y Apellido completo">
+        <input type="email" id="email" placeholder="Correo electrónico">
+        <input type="text" id="celular" placeholder="Número de Celular">
+        <input type="text" id="ciudad" placeholder="Ciudad (Ej: Posadas)">
+        <input type="text" id="servicio" placeholder="Oficio (Ej: Plomero)">
+        <textarea id="resena" placeholder="Breve reseña de su servicio"></textarea>
+        
+        <button class="btn-registro" onclick="enviarRegistro()">FINALIZAR REGISTRO</button>
+    </div>
+
+    <script>
+        async function enviarRegistro() {
+            const datos = {
+                tipo: 'prestador',
+                nombre: document.getElementById('nombre').value,
+                email: document.getElementById('email').value,
+                celular: document.getElementById('celular').value,
+                ciudad: document.getElementById('ciudad').value,
+                servicio: document.getElementById('servicio').value,
+                resena: document.getElementById('resena').value
+            };
+
+            const res = await fetch('/registro', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datos)
+            });
+
+            if (res.ok) {
+                alert("¡Registro recibido! Ahora envíe su DNI por WhatsApp para activar el sello verde.");
+                window.location.href = "/";
+            } else {
+                alert("Error al registrar.");
+            }
+        }
+    </script>
+</body>
+</html>
