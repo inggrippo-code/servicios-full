@@ -2,6 +2,7 @@
 
 require('dotenv').config(); 
 const express = require('express');
+const path = require('path');
 const bcrypt = require('bcrypt');
 const cors = require('cors'); // Agregado para permitir peticiones externas (Toma de datos)
 const { connectDB, query } = require('./db.js');
@@ -56,6 +57,10 @@ app.post('/login', async (req, res) => {
 });
 
 // 3. Obtener todos los usuarios
+// Esta es la llave para mostrar el Frontis de SERVICIOS FULL
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 app.get('/usuarios', async (req, res) => {
     try {
         const result = await query('SELECT id, nombre, email, fecha_registro FROM usuarios ORDER BY id ASC;');
@@ -148,5 +153,6 @@ async function startServer() {
         process.exit(1); 
     }
 }
+
 
 startServer();
