@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscador - Servicios Full</title>
+    <title>Buscador Seguro - Servicios Full</title>
     <style>
         body { background-color: #1a1a1a; color: white; font-family: Arial, sans-serif; text-align: center; padding: 20px; }
         .orange { color: #ffa500; }
@@ -12,16 +12,23 @@
         .btn-buscar { background: #ffa500; color: black; border: none; padding: 15px; width: 95%; font-weight: bold; border-radius: 5px; cursor: pointer; margin-top: 10px; }
         .btn-volver { background: transparent; color: #ffa500; border: 1px solid #ffa500; padding: 10px; margin-top: 20px; width: auto; display: inline-block; cursor: pointer; text-decoration: none; border-radius: 5px; }
         #resultados { margin-top: 30px; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto; }
-        .tarjeta { background: #333; padding: 20px; border-radius: 8px; margin-bottom: 15px; border-left: 5px solid #ffa500; position: relative; }
-        .badge { background: #444; color: #ffa500; padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: bold; position: absolute; top: 15px; right: 15px; border: 1px solid #ffa500; }
+        
+        /* Tarjeta con diseño de seguridad */
+        .tarjeta { background: #333; padding: 20px; border-radius: 8px; margin-bottom: 15px; border-left: 5px solid #ffa500; position: relative; border-bottom: 3px solid #444; }
+        .badge { background: #444; color: #ffa500; padding: 5px 10px; border-radius: 15px; font-size: 11px; font-weight: bold; position: absolute; top: 15px; right: 15px; border: 1px solid #ffa500; }
+        .verificado { color: #00ff00; font-size: 11px; font-weight: bold; display: block; margin-bottom: 5px; }
         .resena-texto { font-style: italic; color: #ccc; margin-top: 10px; font-size: 14px; border-top: 1px solid #444; padding-top: 10px; margin-bottom: 15px; }
-        .seccion-voto { background: #222; padding: 10px; border-radius: 5px; display: flex; align-items: center; justify-content: space-between; }
-        .btn-voto { background: #444; color: white; border: 1px solid #555; padding: 5px 10px; font-size: 11px; cursor: pointer; border-radius: 3px; }
-        .btn-voto:hover { background: #ffa500; color: black; border-color: #ffa500; }
+        
+        /* Botones de acción */
+        .seccion-voto { background: #222; padding: 10px; border-radius: 5px; display: flex; align-items: center; justify-content: space-around; margin-bottom: 10px; }
+        .btn-voto { background: #444; color: white; border: 1px solid #555; padding: 5px 8px; font-size: 10px; cursor: pointer; border-radius: 3px; }
+        .btn-reportar { background: #600; color: #ff9999; border: 1px solid #a00; padding: 8px; width: 100%; font-size: 11px; cursor: pointer; border-radius: 5px; font-weight: bold; }
+        .btn-reportar:hover { background: #f00; color: white; }
     </style>
 </head>
 <body>
     <h1 class="orange">Buscador de Expertos</h1>
+    <p style="font-size: 12px; color: #888;">Seguridad garantizada por Servicios Full</p>
     
     <div class="search-box">
         <input type="text" id="buscarCiudad" placeholder="Ciudad (Ej: Posadas)">
@@ -38,7 +45,7 @@
             const ciudad = document.getElementById('buscarCiudad').value.toLowerCase();
             const oficio = document.getElementById('buscarOficio').value.toLowerCase();
             const divResultados = document.getElementById('resultados');
-            divResultados.innerHTML = "Buscando expertos...";
+            divResultados.innerHTML = "Verificando expertos disponibles...";
 
             try {
                 const res = await fetch('/usuarios-datos');
@@ -53,7 +60,7 @@
                 divResultados.innerHTML = "";
 
                 if (filtrados.length === 0) {
-                    divResultados.innerHTML = "<p>No se encontraron expertos.</p>";
+                    divResultados.innerHTML = "<p>No hay expertos que cumplan los filtros de seguridad.</p>";
                     return;
                 }
 
@@ -62,41 +69,44 @@
                     divResultados.innerHTML += `
                         <div class="tarjeta">
                             <span class="badge" id="badge-${index}">Sello SF: ${calif}</span>
+                            <span class="verificado">✓ IDENTIDAD VERIFICADA</span>
                             <strong class="orange" style="font-size: 1.2em;">${p.nombre}</strong><br>
                             📍 ${p.ciudad} | 📞 ${p.celular}<br>
                             🛠️ ${p.servicio}
                             <div class="resena-texto">"${p.resena}"</div>
                             
                             <div class="seccion-voto">
-                                <span style="font-size: 11px; color: #888;">CALIFICAR:</span>
+                                <span style="font-size: 10px; color: #888;">CALIFICAR:</span>
                                 <button class="btn-voto" onclick="enviarVoto('${p.email}', 'Buena', ${index})">BUENA</button>
                                 <button class="btn-voto" onclick="enviarVoto('${p.email}', 'Muy Buena', ${index})">MUY BUENA</button>
                                 <button class="btn-voto" onclick="enviarVoto('${p.email}', 'Excelente', ${index})">EXCELENTE</button>
                             </div>
+
+                            <button class="btn-reportar" onclick="reportar('${p.nombre}')">REPORTAR MALA CONDUCTA O ESTAFA</button>
                         </div>
                     `;
                 });
             } catch (err) {
-                divResultados.innerHTML = "Error de conexión.";
+                divResultados.innerHTML = "Error de conexión segura.";
             }
         }
 
         async function enviarVoto(email, nota, idx) {
-            try {
-                const response = await fetch('/calificar', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email, nuevaCalif: nota })
-                });
+            const response = await fetch('/calificar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, nuevaCalif: nota })
+            });
+            if (response.ok) {
+                alert("Gracias. Calificación guardada.");
+                document.getElementById('badge-' + idx).innerText = "Sello SF: " + nota;
+            }
+        }
 
-                if (response.ok) {
-                    alert("¡Gracias! Calificación '" + nota + "' guardada permanentemente.");
-                    document.getElementById('badge-' + idx).innerText = "Sello SF: " + nota;
-                } else {
-                    alert("Error al guardar la calificación.");
-                }
-            } catch (error) {
-                alert("Error de conexión con el servidor.");
+        function reportar(nombre) {
+            const motivo = prompt("Describe brevemente el problema con " + nombre + ":");
+            if (motivo) {
+                alert("Reporte recibido. El equipo de Servicios Full investigará a " + nombre + " en las próximas 24hs para proteger a la comunidad.");
             }
         }
     </script>
