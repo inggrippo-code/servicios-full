@@ -7,7 +7,8 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.static(__dirname));
 
-// RUTA PARA REGISTRAR PRESTADORES (Ahora nacen sin verificación)
+// --- RUTA PARA REGISTRAR PRESTADORES ---
+// Importante: Aquí definimos que el usuario nace con 'verificado: false'
 app.post('/registro', (req, res) => {
     const { tipo, nombre, email, celular, ciudad, servicio, resena } = req.body;
     
@@ -20,56 +21,62 @@ app.post('/registro', (req, res) => {
         servicio, 
         resena: resena || "Sin reseña", 
         calificacion: "Buena",
-        verificado: false // Obliga a validación manual por el administrador
+        verificado: false // Obliga a que tú lo valides manualmente después
     };
 
     const linea = JSON.stringify(nuevoUsuario) + "\n";
     
     fs.appendFile('usuarios.txt', linea, (err) => {
-        if (err) return res.status(500).send("Error al guardar.");
-        res.send("Registro recibido. Pendiente de verificación.");
+        if (err) {
+            console.error("Error al escribir:", err);
+            return res.status(500).send("Error al guardar registro.");
+        }
+        res.send("Registro recibido correctamente.");
     });
 });
 
-// RUTA PARA CALIFICAR (Guarda los votos permanentemente)
+// --- RUTA PARA CALIFICAR ---
+// Permite que los usuarios voten y el cambio quede grabado en el archivo TXT
 app.post('/calificar', (req, res) => {
     const { email, nuevaCalif } = req.body;
     
     fs.readFile('usuarios.txt', 'utf8', (err, data) => {
-        if (err) return res.status(500).send("Error al leer base de datos.");
+        if (err) return res.status(500).send("Error al leer datos.");
         
         let lineas = data.trim().split('\n');
-        let actualizado = false;
-
         const nuevasLineas = lineas.map(linea => {
             let u = JSON.parse(linea);
             if (u.email === email) {
-                u.calificacion = nuevaCalif;
-                actualizado = true;
+                u.calificacion = nuevaCalif; // Actualizamos la nota
             }
             return JSON.stringify(u);
         });
 
         fs.writeFile('usuarios.txt', nuevasLineas.join('\n') + '\n', (err) => {
-            if (err) return res.status(500).send("Error al guardar voto.");
-            res.send("Voto guardado.");
+            if (err) return res.status(500).send("Error al guardar calificación.");
+            res.send("Calificación actualizada.");
         });
     });
 });
 
-// RUTA PARA LEER LOS DATOS (El buscador usa esta ruta)
+// --- RUTA PARA ENVIAR DATOS AL BUSCADOR ---
 app.get('/usuarios-datos', (req, res) => {
     fs.readFile('usuarios.txt', 'utf8', (err, data) => {
         if (err) return res.json([]);
-        const lineas = data.trim().split('\n').map(l => JSON.parse(l));
-        res.json(lineas);
+        try {
+            const lineas = data.trim().split('\n').map(l => JSON.parse(l));
+            res.json(lineas);
+        } catch (e) {
+            res.json([]);
+        }
     });
 });
 
+// --- RUTA DE INICIO ---
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en puerto ${PORT}`);
+    console.log(`Servidor de Servicios Full corriendo en puerto ${PORT}`);
 });
