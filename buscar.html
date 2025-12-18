@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscar Servicio - Servicios Full</title>
+    <title>Buscador - Servicios Full</title>
     <style>
         body { background-color: #1a1a1a; color: white; font-family: Arial, sans-serif; text-align: center; padding: 20px; }
         .orange { color: #ffa500; }
@@ -14,10 +14,12 @@
         #resultados { margin-top: 30px; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto; }
         .tarjeta { background: #333; padding: 20px; border-radius: 8px; margin-bottom: 15px; border-left: 5px solid #ffa500; position: relative; }
         .badge { background: #444; color: #ffa500; padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: bold; position: absolute; top: 15px; right: 15px; border: 1px solid #ffa500; }
-        .resena-texto { font-style: italic; color: #ccc; margin-top: 10px; font-size: 14px; border-top: 1px solid #444; padding-top: 10px; }
-        .calificar-box { margin-top: 15px; display: flex; justify-content: space-around; background: #222; padding: 10px; border-radius: 5px; }
-        .btn-calif { background: transparent; border: 1px solid #555; color: #aaa; padding: 5px 8px; font-size: 11px; cursor: pointer; border-radius: 3px; }
-        .btn-calif:hover { border-color: #ffa500; color: #ffa500; }
+        .resena-texto { font-style: italic; color: #ccc; margin-top: 10px; font-size: 14px; border-top: 1px solid #444; padding-top: 10px; margin-bottom: 15px; }
+        
+        /* Estilos para los nuevos botones de calificación */
+        .seccion-voto { background: #222; padding: 10px; border-radius: 5px; display: flex; align-items: center; justify-content: space-between; }
+        .btn-voto { background: #444; color: white; border: 1px solid #555; padding: 5px 10px; font-size: 11px; cursor: pointer; border-radius: 3px; }
+        .btn-voto:hover { background: #ffa500; color: black; border-color: #ffa500; }
     </style>
 </head>
 <body>
@@ -53,7 +55,7 @@
                 divResultados.innerHTML = "";
 
                 if (filtrados.length === 0) {
-                    divResultados.innerHTML = "<p>No se encontraron expertos disponibles.</p>";
+                    divResultados.innerHTML = "<p>No se encontraron expertos.</p>";
                     return;
                 }
 
@@ -61,30 +63,34 @@
                     const calif = p.calificacion || "Buena";
                     divResultados.innerHTML += `
                         <div class="tarjeta">
-                            <span class="badge" id="badge-${index}">${calif}</span>
+                            <span class="badge" id="badge-${index}">Sello SF: ${calif}</span>
                             <strong class="orange" style="font-size: 1.2em;">${p.nombre}</strong><br>
-                            📍 ${p.ciudad} | 🛠️ ${p.servicio}<br>
-                            📞 <a href="tel:${p.celular}" style="color:white; text-decoration:none;">${p.celular}</a>
+                            📍 ${p.ciudad} | 📞 ${p.celular}<br>
+                            🛠️ ${p.servicio}
                             <div class="resena-texto">"${p.resena}"</div>
                             
-                            <div class="calificar-box">
-                                <span style="font-size: 12px; color: #888;">Calificar:</span>
-                                <button class="btn-calif" onclick="votar('${p.email}', 'Buena', ${index})">BUENA</button>
-                                <button class="btn-calif" onclick="votar('${p.email}', 'Muy Buena', ${index})">MUY BUENA</button>
-                                <button class="btn-calif" onclick="votar('${p.email}', 'Excelente', ${index})">EXCELENTE</button>
+                            <div class="seccion-voto">
+                                <span style="font-size: 11px; color: #888;">CALIFICAR:</span>
+                                <button class="btn-voto" onclick="votar('${p.email}', 'Buena', ${index})">BUENA</button>
+                                <button class="btn-voto" onclick="votoEspecial('${p.email}', 'Muy Buena', ${index})">MUY BUENA</button>
+                                <button class="btn-voto" onclick="votoEspecial('${p.email}', 'Excelente', ${index})">EXCELENTE</button>
                             </div>
                         </div>
                     `;
                 });
             } catch (err) {
-                divResultados.innerHTML = "Error al conectar.";
+                divResultados.innerHTML = "Error de conexión.";
             }
         }
 
-        async function votar(email, nota, idx) {
-            alert("Gracias por calificar. Tu voto para " + nota + " ha sido enviado.");
-            // Aquí en el futuro conectaremos la lógica para sobreescribir el archivo
-            document.getElementById('badge-' + idx).innerText = nota;
+        function votar(email, nota, idx) {
+            alert("Gracias por tu calificación: " + nota);
+            document.getElementById('badge-' + idx).innerText = "Sello SF: " + nota;
+        }
+
+        function votoEspecial(email, nota, idx) {
+            alert("Has calificado como " + nota + ". ¡Gracias por ayudar a la comunidad!");
+            document.getElementById('badge-' + idx).innerText = "Sello SF: " + nota;
         }
     </script>
 </body>
