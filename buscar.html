@@ -13,22 +13,28 @@
         .btn-volver { background: transparent; color: #ffa500; border: 1px solid #ffa500; padding: 10px; margin-top: 20px; width: auto; display: inline-block; cursor: pointer; text-decoration: none; border-radius: 5px; }
         #resultados { margin-top: 30px; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto; }
         
-        /* Tarjeta con diseño de seguridad */
-        .tarjeta { background: #333; padding: 20px; border-radius: 8px; margin-bottom: 15px; border-left: 5px solid #ffa500; position: relative; border-bottom: 3px solid #444; }
-        .badge { background: #444; color: #ffa500; padding: 5px 10px; border-radius: 15px; font-size: 11px; font-weight: bold; position: absolute; top: 15px; right: 15px; border: 1px solid #ffa500; }
-        .verificado { color: #00ff00; font-size: 11px; font-weight: bold; display: block; margin-bottom: 5px; }
-        .resena-texto { font-style: italic; color: #ccc; margin-top: 10px; font-size: 14px; border-top: 1px solid #444; padding-top: 10px; margin-bottom: 15px; }
+        /* CUADRO DE CONSEJOS */
+        .consejos-seguridad { background: #001a33; color: #80dfff; padding: 15px; border-radius: 10px; margin-bottom: 20px; font-size: 13px; border: 1px solid #004080; text-align: left; }
         
-        /* Botones de acción */
+        .tarjeta { background: #333; padding: 20px; border-radius: 8px; margin-bottom: 15px; border-left: 5px solid #ffa500; position: relative; }
+        .badge { background: #444; color: #ffa500; padding: 5px 10px; border-radius: 15px; font-size: 11px; font-weight: bold; position: absolute; top: 15px; right: 15px; border: 1px solid #ffa500; }
+        .resena-texto { font-style: italic; color: #ccc; margin-top: 10px; font-size: 14px; border-top: 1px solid #444; padding-top: 10px; margin-bottom: 15px; }
         .seccion-voto { background: #222; padding: 10px; border-radius: 5px; display: flex; align-items: center; justify-content: space-around; margin-bottom: 10px; }
         .btn-voto { background: #444; color: white; border: 1px solid #555; padding: 5px 8px; font-size: 10px; cursor: pointer; border-radius: 3px; }
         .btn-reportar { background: #600; color: #ff9999; border: 1px solid #a00; padding: 8px; width: 100%; font-size: 11px; cursor: pointer; border-radius: 5px; font-weight: bold; }
-        .btn-reportar:hover { background: #f00; color: white; }
     </style>
 </head>
 <body>
     <h1 class="orange">Buscador de Expertos</h1>
-    <p style="font-size: 12px; color: #888;">Seguridad garantizada por Servicios Full</p>
+
+    <div class="consejos-seguridad">
+        <strong>🛡️ GUÍA DE SEGURIDAD PARA EL CLIENTE:</strong>
+        <ul style="margin: 8px 0;">
+            <li>Exija ver el <b>DNI físico</b> del experto antes de permitir el ingreso.</li>
+            <li>Compare la foto del DNI con la persona presente.</li>
+            <li>No abone la totalidad del trabajo por adelantado.</li>
+        </ul>
+    </div>
     
     <div class="search-box">
         <input type="text" id="buscarCiudad" placeholder="Ciudad (Ej: Posadas)">
@@ -45,7 +51,7 @@
             const ciudad = document.getElementById('buscarCiudad').value.toLowerCase();
             const oficio = document.getElementById('buscarOficio').value.toLowerCase();
             const divResultados = document.getElementById('resultados');
-            divResultados.innerHTML = "Verificando expertos disponibles...";
+            divResultados.innerHTML = "Verificando expertos...";
 
             try {
                 const res = await fetch('/usuarios-datos');
@@ -60,16 +66,22 @@
                 divResultados.innerHTML = "";
 
                 if (filtrados.length === 0) {
-                    divResultados.innerHTML = "<p>No hay expertos que cumplan los filtros de seguridad.</p>";
+                    divResultados.innerHTML = "<p>No se encontraron resultados.</p>";
                     return;
                 }
 
                 filtrados.forEach((p, index) => {
                     const calif = p.calificacion || "Buena";
+                    
+                    // Lógica del Sello de Verificación
+                    const selloHTML = p.verificado ? 
+                        `<span style="color: #00ff00; font-size: 11px; font-weight: bold;">● IDENTIDAD VERIFICADA</span>` : 
+                        `<span style="color: #ff4444; font-size: 11px; font-weight: bold;">⚠ PERFIL EN PROCESO DE VALIDACIÓN</span>`;
+
                     divResultados.innerHTML += `
                         <div class="tarjeta">
                             <span class="badge" id="badge-${index}">Sello SF: ${calif}</span>
-                            <span class="verificado">✓ IDENTIDAD VERIFICADA</span>
+                            ${selloHTML}<br>
                             <strong class="orange" style="font-size: 1.2em;">${p.nombre}</strong><br>
                             📍 ${p.ciudad} | 📞 ${p.celular}<br>
                             🛠️ ${p.servicio}
@@ -87,7 +99,7 @@
                     `;
                 });
             } catch (err) {
-                divResultados.innerHTML = "Error de conexión segura.";
+                divResultados.innerHTML = "Error de conexión.";
             }
         }
 
@@ -98,15 +110,15 @@
                 body: JSON.stringify({ email: email, nuevaCalif: nota })
             });
             if (response.ok) {
-                alert("Gracias. Calificación guardada.");
+                alert("Calificación guardada.");
                 document.getElementById('badge-' + idx).innerText = "Sello SF: " + nota;
             }
         }
 
         function reportar(nombre) {
-            const motivo = prompt("Describe brevemente el problema con " + nombre + ":");
+            const motivo = prompt("¿Qué sucedió con " + nombre + "?");
             if (motivo) {
-                alert("Reporte recibido. El equipo de Servicios Full investigará a " + nombre + " en las próximas 24hs para proteger a la comunidad.");
+                alert("Gracias. El equipo de seguridad ha recibido su reporte sobre " + nombre);
             }
         }
     </script>
