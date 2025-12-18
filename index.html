@@ -12,9 +12,11 @@
         button { padding: 12px 20px; margin: 5px; border-radius: 5px; cursor: pointer; font-weight: bold; }
         .btn-main { background: #ffa500; border: none; }
         .btn-outline { background: transparent; border: 2px solid #ffa500; color: #ffa500; }
-        .form-container { background: #262626; padding: 20px; border-radius: 10px; display: inline-block; width: 90%; max-width: 400px; margin-top: 20px; border: 1px solid #333; }
-        input, select { display: block; margin: 10px auto; padding: 10px; width: 90%; border-radius: 5px; }
+        .form-container { background: #262626; padding: 20px; border-radius: 10px; display: inline-block; width: 90%; max-width: 450px; margin-top: 20px; border: 1px solid #333; }
+        input, textarea, select { display: block; margin: 10px auto; padding: 12px; width: 90%; border-radius: 5px; border: 1px solid #444; background: #fff; color: #000; font-size: 14px; }
+        textarea { resize: vertical; font-family: Arial, sans-serif; }
         .hidden { display: none; }
+        #mensaje { margin-top: 15px; font-weight: bold; color: #ffa500; }
     </style>
 </head>
 <body>
@@ -23,57 +25,73 @@
     <p>Conectamos necesidades con expertos locales.</p>
 
     <div class="btn-group">
-       <button class="btn-main" onclick="window.location.href='/buscar.html'">BUSCO UN SERVICIO</button>
+        <button class="btn-main" onclick="window.location.href='/buscar.html'">BUSCO UN SERVICIO</button>
         <button class="btn-outline" onclick="mostrarForm('prestador')">SOY PRESTADOR</button>
     </div>
 
     <div id="registro-seccion" class="form-container hidden">
-        <h3 id="titulo-form" class="orange">Regístrate</h3>
+        <h3 id="titulo-form" class="orange">Registro de Prestador</h3>
         <input type="text" id="nombre" placeholder="Nombre y Apellido">
         <input type="email" id="email" placeholder="Email">
         <input type="tel" id="celular" placeholder="Número de Celular">
         <input type="text" id="ciudad" placeholder="Ciudad / Localidad">
         
-        <div id="campos-prestador" class="hidden">
-            <input type="text" id="servicio" placeholder="¿Qué servicio prestas? (Ej: Plomero)">
+        <div id="campos-prestador">
+            <input type="text" id="servicio" placeholder="Oficio principal (Ej: Plomero)">
+            <textarea id="resena" placeholder="Reseña del servicio (máximo 5 frases)" rows="3"></textarea>
+            <textarea id="experiencia" placeholder="Tu Expertise, Conocimientos y Experiencia" rows="3"></textarea>
+            <input type="text" id="referencias" placeholder="Referencias (Nombres o Teléfonos)">
         </div>
 
-        <button class="btn-main" style="width: 95%" onclick="enviarDatos()">FINALIZAR REGISTRO</button>
+        <button class="btn-main" style="width: 95%; margin-top: 10px;" onclick="enviarDatos()">FINALIZAR REGISTRO</button>
         <p id="mensaje"></p>
     </div>
 
     <script>
-        let tipoUsuario = '';
+        let tipoUsuario = 'prestador'; // El formulario principal ahora es para prestadores
 
         function mostrarForm(tipo) {
-            tipoUsuario = tipo;
             document.getElementById('registro-seccion').classList.remove('hidden');
-            document.getElementById('titulo-form').innerText = tipo === 'usuario' ? 'Registro de Usuario' : 'Registro de Prestador';
-            
-            const camposPrestador = document.getElementById('campos-prestador');
-            tipo === 'prestador' ? camposPrestador.classList.remove('hidden') : camposPrestador.classList.add('hidden');
+            window.scrollTo(0, document.body.scrollHeight);
         }
 
         async function enviarDatos() {
+            const btn = event.target;
+            btn.innerText = "PROCESANDO...";
+            btn.disabled = true;
+
             const datos = {
                 tipo: tipoUsuario,
                 nombre: document.getElementById('nombre').value,
                 email: document.getElementById('email').value,
                 celular: document.getElementById('celular').value,
                 ciudad: document.getElementById('ciudad').value,
-                servicio: document.getElementById('servicio').value || 'N/A'
+                servicio: document.getElementById('servicio').value,
+                resena: document.getElementById('resena').value,
+                experiencia: document.getElementById('experiencia').value,
+                referencias: document.getElementById('referencias').value
             };
 
-            const res = await fetch('/registro', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(datos)
-            });
+            try {
+                const res = await fetch('/registro', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(datos)
+                });
 
-            document.getElementById('mensaje').innerText = await res.text();
+                if (res.ok) {
+                    document.getElementById('mensaje').innerText = "¡Registro enviado con éxito! Revisaremos tu perfil.";
+                    document.getElementById('registro-seccion').style.opacity = "0.5";
+                } else {
+                    document.getElementById('mensaje').innerText = "Error al enviar. Intenta de nuevo.";
+                }
+            } catch (error) {
+                document.getElementById('mensaje').innerText = "Error de conexión.";
+            } finally {
+                btn.innerText = "FINALIZAR REGISTRO";
+                btn.disabled = false;
+            }
         }
     </script>
 </body>
 </html>
-    
-  
