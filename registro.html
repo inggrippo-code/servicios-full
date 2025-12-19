@@ -3,49 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro - Servicios Full</title>
+    <title>Unirse a la Red - Servicios Full</title>
     <style>
-        body { background-color: #1a1a1a; color: white; font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-        .orange { color: #ffa500; }
-        .form-box { background: #262626; padding: 20px; border-radius: 10px; display: inline-block; width: 90%; max-width: 450px; border: 1px solid #333; }
-        input, textarea { display: block; margin: 10px auto; padding: 12px; width: 90%; border-radius: 5px; border: none; background: #333; color: white; }
-        .btn-registro { background: #ffa500; color: black; border: none; padding: 15px; width: 95%; font-weight: bold; border-radius: 5px; cursor: pointer; margin-top: 10px; }
-        .alerta-seguridad { background: #331a00; border: 1px dashed #ffa500; padding: 15px; margin-bottom: 20px; border-radius: 5px; font-size: 14px; text-align: left; }
+        body { background-color: #f4f7f6; color: #333; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 20px; }
+        .container { max-width: 500px; margin: 0 auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e0e0e0; }
+        h1 { color: #ff6600; text-align: center; }
+        p { text-align: center; color: #666; margin-bottom: 30px; }
+        
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; font-size: 14px; }
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box; /* Para que el padding no ensanche el input */
+            font-size: 16px;
+        }
+
+        /* RECUADRO DE SEGURIDAD DENTRO DEL REGISTRO */
+        .info-dni {
+            background: #fff8e1;
+            border: 1px solid #ffe082;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-size: 13px;
+            color: #856404;
+        }
+
+        .btn-registrar {
+            background: #00a884;
+            color: white;
+            border: none;
+            padding: 18px;
+            width: 100%;
+            font-weight: bold;
+            font-size: 1.1em;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-registrar:hover { background: #008f6f; }
     </style>
 </head>
 <body>
-    <h1 class="orange">Registro de Expertos</h1>
-    
-    <div class="form-box">
-        <div class="alerta-seguridad">
-            <strong style="color: #ffa500;">⚠️ REQUISITO PARA EL SELLO DE CONFIANZA:</strong><br><br>
-            Para obtener el <b>Sello de Identidad Verificada</b> (Verde), una vez finalizado este registro deberá enviar por WhatsApp al administrador:
-            <ul style="margin-top: 10px;">
-                <li>Foto de DNI (Frente y Dorso)</li>
-                <li>Una selfie con su DNI en la mano</li>
-            </ul>
-            <i>Su perfil nacerá en estado "Pendiente" hasta que verifiquemos estos datos.</i>
+
+    <div class="container">
+        <h1>Únete como Experto</h1>
+        <p>Forma parte de la red de servicios más segura.</p>
+
+        <div class="info-dni">
+            <strong>🛡️ VERIFICACIÓN OBLIGATORIA:</strong><br>
+            Para activar su perfil, luego de este registro deberá enviarnos vía WhatsApp una foto de su DNI y una Selfie. Esto garantiza que "bandidos" no ingresen a la plataforma.
         </div>
 
-        <input type="text" id="nombre" placeholder="Nombre y Apellido completo">
-        <input type="email" id="email" placeholder="Correo electrónico">
-        <input type="text" id="celular" placeholder="Número de Celular">
-        <input type="text" id="ciudad" placeholder="Ciudad (Ej: Posadas)">
-        <input type="text" id="servicio" placeholder="Oficio (Ej: Plomero)">
-        <textarea id="resena" placeholder="Breve reseña de su servicio"></textarea>
-        
-        <button class="btn-registro" onclick="enviarRegistro()">FINALIZAR REGISTRO</button>
+        <form id="formRegistro">
+            <label>Nombre y Apellido</label>
+            <input type="text" id="nombre" placeholder="Ej: Juan Pérez" required>
+
+            <label>Ciudad</label>
+            <input type="text" id="ciudad" placeholder="Ej: Posadas" required>
+
+            <label>Oficio / Especialidad</label>
+            <input type="text" id="oficio" placeholder="Ej: Plomero Matriculado" required>
+
+            <label>WhatsApp de contacto (No será público)</label>
+            <input type="text" id="celular" placeholder="Ej: 3764123456" required>
+
+            <label>Correo Electrónico</label>
+            <input type="email" id="email" required>
+
+            <label>Breve descripción de su servicio</label>
+            <textarea id="resena" rows="3" placeholder="Cuéntenos qué hace y su experiencia..."></textarea>
+
+            <button type="button" class="btn-registrar" onclick="enviar()">CREAR MI PERFIL</button>
+        </form>
     </div>
 
     <script>
-        async function enviarRegistro() {
+        async function enviar() {
             const datos = {
                 tipo: 'prestador',
                 nombre: document.getElementById('nombre').value,
                 email: document.getElementById('email').value,
                 celular: document.getElementById('celular').value,
                 ciudad: document.getElementById('ciudad').value,
-                servicio: document.getElementById('servicio').value,
+                servicio: document.getElementById('oficio').value,
                 resena: document.getElementById('resena').value
             };
 
@@ -56,10 +101,10 @@
             });
 
             if (res.ok) {
-                alert("¡Registro recibido! Ahora envíe su DNI por WhatsApp para activar el sello verde.");
+                alert("¡Casi listo! Registro recibido. Ahora envíe su DNI por WhatsApp para validar su identidad.");
                 window.location.href = "/";
             } else {
-                alert("Error al registrar.");
+                alert("Hubo un error. Intente nuevamente.");
             }
         }
     </script>
