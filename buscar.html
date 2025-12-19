@@ -3,183 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscador Premium - Servicios Full</title>
+    <title>Buscador Inteligente - Servicios Full</title>
     <style>
-        /* ESTÉTICA CLARA E IMPACTANTE */
         body { 
             background-color: #f4f7f6; 
             color: #333; 
             font-family: 'Segoe UI', Arial, sans-serif; 
-            margin: 0; 
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            margin: 0; padding: 0;
+            display: flex; flex-direction: column; align-items: center;
         }
 
-        /* FONDO SUGERENTE (Igual a la apertura) */
-        .bg-overlay {
+        /* Fondo con fotos vivas (Sutil) */
+        .bg-viva {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('https://images.unsplash.com/photo-1581578731522-a20478d4486b?auto=format&fit=crop&q=80&w=2070');
             background-size: cover;
-            opacity: 0.05;
+            opacity: 0.07;
             z-index: -1;
         }
 
-        /* GUÍA DE SEGURIDAD ESCUETA Y ELEGANTE */
         .mini-seguridad {
-            background: #e3f2fd;
-            color: #0d47a1;
-            padding: 8px 20px;
+            background: #ffffff;
+            color: #00a884;
+            padding: 5px 15px;
             border-radius: 50px;
-            font-size: 12px;
-            margin-top: 20px;
-            border: 1px solid #bbdefb;
-            font-weight: 500;
+            font-size: 11px;
+            margin-top: 15px;
+            border: 1px solid #00a884;
+            font-weight: bold;
         }
 
-        h1 { color: #333; margin-top: 15px; font-weight: 300; }
-        .orange { color: #ff6600; font-weight: bold; }
-
-        /* CUADRO DE BÚSQUEDA MODERNO */
         .search-box {
             background: white;
-            padding: 30px;
+            padding: 25px;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            width: 90%;
-            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            width: 90%; max-width: 450px;
             margin-top: 20px;
             border: 1px solid #eee;
+            z-index: 10;
         }
 
         input {
-            width: 90%;
-            padding: 15px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            font-size: 16px;
-            outline: none;
+            width: 90%; padding: 12px; margin: 8px 0;
+            border: 1px solid #ddd; border-radius: 10px; font-size: 16px;
         }
 
-        .btn-buscar {
-            background: #ff6600;
-            color: white;
-            border: none;
-            padding: 15px;
-            width: 95%;
-            font-weight: bold;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-
-        .btn-buscar:hover { background: #e65c00; transform: scale(1.02); }
-
-        /* TARJETAS DE SERVICIOS */
-        #resultados {
+        /* MOSAICO DE SERVICIOS (VITRINA) */
+        .vitrina-servicios {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 20px;
-            padding: 40px 20px;
-            width: 100%;
+            gap: 15px;
+            margin-top: 25px;
+            width: 95%;
+            max-width: 1000px;
         }
 
-        .tarjeta {
+        .card-servicio {
+            width: 140px;
+            height: 180px;
             background: white;
-            padding: 20px;
             border-radius: 15px;
-            width: 280px;
-            border: 1px solid #eee;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.04);
-            text-align: left;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            cursor: pointer;
             transition: 0.3s;
+            border: 1px solid #eee;
+            position: relative;
         }
 
-        .tarjeta:hover { border-color: #ff6600; }
+        .card-servicio:hover { transform: translateY(-5px); border-color: #ff6600; }
 
-        .sello { font-size: 10px; font-weight: bold; text-transform: uppercase; }
-        .verificado { color: #00a884; }
-        .pendiente { color: #d32f2f; }
+        .card-servicio img { width: 100%; height: 100px; object-fit: cover; }
 
-        .btn-solicitar {
-            background: #00a884;
-            color: white;
-            border: none;
+        .card-servicio span {
+            display: block;
             padding: 10px;
-            width: 100%;
-            border-radius: 8px;
+            font-size: 13px;
             font-weight: bold;
-            margin-top: 15px;
-            cursor: pointer;
+            text-align: center;
+            color: #333;
+        }
+
+        /* RESULTADOS FINALES */
+        #resultados { margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+
+        .tarjeta-experto {
+            background: white; padding: 20px; border-radius: 15px; width: 280px;
+            border-left: 5px solid #ff6600; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: left;
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-overlay"></div>
+    <div class="bg-viva"></div>
 
-    <div class="mini-seguridad">
-        🛡️ Pago Protegido por Servicios Full. No comparta datos de contacto.
-    </div>
+    <div class="mini-seguridad">🛡️ PAGO SEGURO INTERMEDIADO</div>
 
-    <h1>Busca en <span class="orange">Servicios Full</span></h1>
+    <h1 style="font-weight: 300;">Servicios en <span style="color:#ff6600; font-weight:bold;">Tu Ciudad</span></h1>
 
     <div class="search-box">
-        <input type="text" id="ciudad" placeholder="📍 Ciudad (ej: Posadas)">
-        <input type="text" id="oficio" placeholder="🛠️ ¿Qué necesitas? (ej: Electricista)">
-        <button class="btn-buscar" onclick="ejecutarBusqueda()">ENCUENTRAR EXPERTO</button>
+        <input type="text" id="ciudad" placeholder="📍 Escribe tu ciudad (ej: Posadas)" oninput="mostrarVitrina()">
+        <input type="text" id="oficio" placeholder="🛠️ ¿Qué servicio buscas?">
     </div>
+
+    <div id="vitrina" class="vitrina-servicios"></div>
 
     <div id="resultados"></div>
 
     <script>
-        async function ejecutarBusqueda() {
-            const ciudad = document.getElementById('ciudad').value.trim().toLowerCase();
-            const oficio = document.getElementById('oficio').value.trim().toLowerCase();
-            const div = document.getElementById('resultados');
+        // Simulamos fotos por categoría para el impacto visual
+        const fotosSugeridas = {
+            "plomero": "https://images.unsplash.com/photo-1581244276891-8339386d3331?q=80&w=200",
+            "electricista": "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=200",
+            "enfermera": "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?q=80&w=200",
+            "flete": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=200",
+            "default": "https://images.unsplash.com/photo-1581578731522-a20478d4486b?q=80&w=200"
+        };
 
-            div.innerHTML = "<p>Conectando con expertos...</p>";
-
-            try {
-                const res = await fetch('/usuarios-datos');
-                const datos = await res.json();
-
-                // Búsqueda flexible: busca si el texto está incluido
-                const filtrados = datos.filter(p => 
-                    p.ciudad.toLowerCase().includes(ciudad) && 
-                    p.servicio.toLowerCase().includes(oficio) &&
-                    p.tipo === 'prestador'
-                );
-
-                div.innerHTML = "";
-
-                if (filtrados.length === 0) {
-                    div.innerHTML = "<p>No encontramos expertos aún con esos términos. Intenta con otra palabra.</p>";
-                    return;
-                }
-
-                filtrados.forEach(p => {
-                    const selloClass = p.verificado ? 'verificado' : 'pendiente';
-                    const selloTxt = p.verificado ? '● Verificado' : '⚠ En Proceso';
-
-                    div.innerHTML += `
-                        <div class="tarjeta">
-                            <span class="sello ${selloClass}">${selloTxt}</span>
-                            <h3 style="margin: 8px 0;">${p.nombre}</h3>
-                            <p style="font-size: 13px; color: #777; margin: 0;">📍 ${p.ciudad} | ⭐ ${p.calificacion}</p>
-                            <p style="font-size: 14px; font-style: italic; color: #444;">"${p.resena}"</p>
-                            <button class="btn-solicitar" onclick="alert('Solicitud enviada. Activando pago seguro...')">SOLICITAR</button>
-                        </div>
-                    `;
-                });
-            } catch (e) {
-                div.innerHTML = "<p>Error al cargar. Intente de nuevo.</p>";
+        async function mostrarVitrina() {
+            const ciudad = document.getElementById('ciudad').value.toLowerCase();
+            const vitrina = document.getElementById('vitrina');
+            const resultados = document.getElementById('resultados');
+            
+            if (ciudad.length < 3) {
+                vitrina.innerHTML = "";
+                return;
             }
+
+            const res = await fetch('/usuarios-datos');
+            const datos = await res.json();
+
+            // Buscamos oficios únicos en esa ciudad
+            const oficiosEnCiudad = [...new Set(datos
+                .filter(p => p.ciudad.toLowerCase().includes(ciudad))
+                .map(p => p.servicio.toLowerCase())
+            )];
+
+            vitrina.innerHTML = "";
+            resultados.innerHTML = "";
+
+            oficiosEnCiudad.forEach(oficio => {
+                const foto = fotosSugeridas[oficio] || fotosSugeridas["default"];
+                vitrina.innerHTML += `
+                    <div class="card-servicio" onclick="buscarEspecifico('${oficio}')">
+                        <img src="${foto}" alt="${oficio}">
+                        <span>${oficio.toUpperCase()}</span>
+                    </div>
+                `;
+            });
+        }
+
+        async function buscarEspecifico(oficio) {
+            const ciudad = document.getElementById('ciudad').value.toLowerCase();
+            const res = await fetch('/usuarios-datos');
+            const datos = await res.json();
+
+            const filtrados = datos.filter(p => 
+                p.ciudad.toLowerCase().includes(ciudad) && 
+                p.servicio.toLowerCase() === oficio
+            );
+
+            const div = document.getElementById('resultados');
+            div.innerHTML = "";
+            document.getElementById('vitrina').innerHTML = ""; // Limpiamos vitrina para mostrar resultados
+
+            filtrados.forEach(p => {
+                div.innerHTML += `
+                    <div class="tarjeta-experto">
+                        <small style="color:#00a884; font-weight:bold;">● VERIFICADO</small>
+                        <h3>${p.nombre}</h3>
+                        <p>📍 ${p.ciudad} | ⭐ ${p.calificacion}</p>
+                        <button style="width:100%; padding:10px; background:#00a884; color:white; border:none; border-radius:5px; font-weight:bold; cursor:pointer;" onclick="alert('Solicitando presupuesto seguro...')">SOLICITAR SERVICIO</button>
+                    </div>
+                `;
+            });
         }
     </script>
 </body>
