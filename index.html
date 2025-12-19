@@ -3,84 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servicios Full - Tu Solución Confiable</title>
+    <title>Servicios Full - Conectando Expertos</title>
     <style>
-        /* DISEÑO MODERNO Y CLARO */
-        body, html {
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
             display: flex;
-            align-items: center;
             justify-content: center;
-            overflow: hidden;
-        }
-
-        /* FONDO CON FOTOS DE SERVICIOS */
-        .background-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=2069');
+            align-items: center;
+            min-height: 100vh;
+            background: #f4f4f9 url('https://images.unsplash.com/photo-1581092921461-eab62e92c859?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
             background-size: cover;
-            background-position: center;
-            opacity: 0.12;
-            z-index: -1;
         }
 
-        /* CAJA CENTRAL */
-        .hero-card {
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
             background: white;
-            padding: 50px 40px;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             text-align: center;
-            max-width: 450px;
+            max-width: 500px;
             width: 90%;
-            border: 1px solid #e0e0e0;
         }
 
         h1 {
+            font-size: 2.5rem;
             color: #333;
-            font-size: 2.2em;
             margin-bottom: 10px;
-            letter-spacing: -1px;
         }
 
-        .orange-text { color: #ff6600; }
+        h1 span {
+            color: #ff6f00;
+        }
 
         p {
             color: #666;
-            font-size: 1.1em;
-            margin-bottom: 35px;
-            line-height: 1.5;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
         }
 
-        /* BOTONES */
-        .btn-container {
+        .buttons-container {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
 
         .btn {
-            padding: 16px;
-            border-radius: 12px;
-            text-decoration: none;
+            padding: 15px 25px;
+            font-size: 1.1rem;
             font-weight: bold;
-            font-size: 1.05em;
-            transition: all 0.3s ease;
-            display: block;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
         .btn-buscar {
-            background: #ff6600;
+            background: #ff6f00;
             color: white;
         }
 
@@ -89,32 +91,34 @@
             color: white;
         }
 
-        .footer-text {
-            margin-top: 35px;
-            font-size: 0.85em;
-            color: #aaa;
+        .footer-info {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #888;
             border-top: 1px solid #eee;
             padding-top: 20px;
         }
     </style>
 </head>
 <body>
-
-    <div class="background-overlay"></div>
-
-    <div class="hero-card">
-        <h1>SERVICIOS <span class="orange-text">FULL</span></h1>
+    <div class="overlay"></div>
+    <div class="container">
+        <h1>SERVICIOS <span>FULL</span></h1>
         <p>Conectamos tus necesidades con los mejores expertos de tu ciudad.</p>
 
-        <div class="btn-container">
-            <a href="buscar.html" class="btn btn-buscar">🔍 BUSCAR EXPERTO</a>
-            <a href="registro.html" class="btn btn-prestador">👷 SOY PRESTADOR</a>
+        <div class="buttons-container">
+            <a href="buscar.html" style="text-decoration: none;">
+                <button class="btn btn-buscar">🔍 BUSCAR EXPERTO</button>
+            </a>
+
+            <a href="registro.html" style="text-decoration: none;">
+                <button class="btn btn-prestador">👷 SOY PRESTADOR</button>
+            </a>
         </div>
 
-        <div class="footer-text">
+        <div class="footer-info">
             🛡️ Seguridad Garantizada | ⭐ Profesionales Verificados
         </div>
     </div>
-
 </body>
 </html>
