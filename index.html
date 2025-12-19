@@ -11,25 +11,21 @@
             padding: 0;
             height: 100%;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6; /* Gris muy claro de fondo */
+            background-color: #f4f7f6;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* FONDO DINÁMICO CON FOTOS DE SERVICIOS */
         .background-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=2069'), 
-                              url('https://images.unsplash.com/photo-1581578731522-a20478d4486b?auto=format&fit=crop&q=80&w=2070');
-            background-blend-mode: overlay;
+            background-image: url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=2069');
             background-size: cover;
-            opacity: 0.15; /* Fotos suaves para no distraer */
+            opacity: 0.10;
             z-index: -1;
         }
 
-        /* CAJA CENTRAL (EL "CLUB DE SOLUCIONES") */
         .hero-card {
             background: white;
             padding: 40px;
@@ -38,20 +34,13 @@
             text-align: center;
             max-width: 500px;
             width: 90%;
-            border: 1px solid #e0e0e0; /* Marco Gris Plata fino */
+            border: 1px solid #e0e0e0;
         }
 
-        h1 {
-            color: #333;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        .orange-text { color: #ff6600; } /* Naranja vibrante para el título */
-
+        h1 { color: #333; font-size: 2.5em; margin-bottom: 10px; }
+        .orange-text { color: #ff6600; }
         p { color: #666; font-size: 1.1em; margin-bottom: 30px; }
 
-        /* BOTONES DE ACCIÓN */
         .btn-container {
             display: flex;
             flex-direction: column;
@@ -64,31 +53,17 @@
             text-decoration: none;
             font-weight: bold;
             font-size: 1.1em;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s;
             border: none;
-            cursor: pointer;
+            display: block;
         }
 
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
+        .btn:hover { transform: translateY(-3px); }
 
-        .btn-buscar {
-            background: #ff6600; /* Naranja de acción */
-            color: white;
-        }
+        .btn-buscar { background: #ff6600; color: white; }
+        .btn-prestador { background: #00a884; color: white; }
 
-        .btn-prestador {
-            background: #00a884; /* Verde esmeralda de confianza/seguridad */
-            color: white;
-        }
-
-        .footer-text {
-            margin-top: 30px;
-            font-size: 0.9em;
-            color: #999;
-        }
+        .footer-text { margin-top: 30px; font-size: 0.9em; color: #999; }
     </style>
 </head>
 <body>
@@ -111,4 +86,3 @@
 
 </body>
 </html>
-  
