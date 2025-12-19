@@ -3,124 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscador Seguro - Servicios Full</title>
+    <title>Buscador - Servicios Full</title>
     <style>
-        body { background-color: #1a1a1a; color: white; font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-        .orange { color: #ffa500; }
-        .search-box { background: #262626; padding: 20px; border-radius: 10px; display: inline-block; width: 90%; max-width: 400px; border: 1px solid #333; margin-bottom: 20px; }
-        input { display: block; margin: 10px auto; padding: 12px; width: 90%; border-radius: 5px; border: none; }
-        .btn-buscar { background: #ffa500; color: black; border: none; padding: 15px; width: 95%; font-weight: bold; border-radius: 5px; cursor: pointer; margin-top: 10px; }
-        .btn-volver { background: transparent; color: #ffa500; border: 1px solid #ffa500; padding: 10px; margin-top: 20px; width: auto; display: inline-block; cursor: pointer; text-decoration: none; border-radius: 5px; }
-        #resultados { margin-top: 30px; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto; }
+        body { background-color: #f4f7f6; color: #333; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 20px; text-align: center; }
+        .orange { color: #ff6600; }
         
-        /* CUADRO DE CONSEJOS */
-        .consejos-seguridad { background: #001a33; color: #80dfff; padding: 15px; border-radius: 10px; margin-bottom: 20px; font-size: 13px; border: 1px solid #004080; text-align: left; }
-        
-        .tarjeta { background: #333; padding: 20px; border-radius: 8px; margin-bottom: 15px; border-left: 5px solid #ffa500; position: relative; }
-        .badge { background: #444; color: #ffa500; padding: 5px 10px; border-radius: 15px; font-size: 11px; font-weight: bold; position: absolute; top: 15px; right: 15px; border: 1px solid #ffa500; }
-        .resena-texto { font-style: italic; color: #ccc; margin-top: 10px; font-size: 14px; border-top: 1px solid #444; padding-top: 10px; margin-bottom: 15px; }
-        .seccion-voto { background: #222; padding: 10px; border-radius: 5px; display: flex; align-items: center; justify-content: space-around; margin-bottom: 10px; }
-        .btn-voto { background: #444; color: white; border: 1px solid #555; padding: 5px 8px; font-size: 10px; cursor: pointer; border-radius: 3px; }
-        .btn-reportar { background: #600; color: #ff9999; border: 1px solid #a00; padding: 8px; width: 100%; font-size: 11px; cursor: pointer; border-radius: 5px; font-weight: bold; }
+        /* CUADRO DE BÚSQUEDA CLARO */
+        .search-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+            border: 1px solid #e0e0e0;
+        }
+
+        input {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px;
+            width: 80%;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        .btn-buscar {
+            background: #ff6600;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 85%;
+        }
+
+        /* TARJETAS DE PRESTADORES CON MARCO PROFESIONAL */
+        #resultados {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            width: 300px;
+            text-align: left;
+            border: 1px solid #eee; /* Marco fino sugerido */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .badge-verificado { color: #00a884; font-weight: bold; font-size: 12px; }
+        .badge-pendiente { color: #cc0000; font-weight: bold; font-size: 12px; }
+
+        .btn-solicitar {
+            background: #00a884;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            border-radius: 6px;
+            display: block;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .consejos-box {
+            background: #eef7ff;
+            color: #004080;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            max-width: 600px;
+            margin: 20px auto;
+            border: 1px solid #cce5ff;
+        }
     </style>
 </head>
 <body>
-    <h1 class="orange">Buscador de Expertos</h1>
 
-    <div class="consejos-seguridad">
-        <strong>🛡️ GUÍA DE SEGURIDAD PARA EL CLIENTE:</strong>
-        <ul style="margin: 8px 0;">
-            <li>Exija ver el <b>DNI físico</b> del experto antes de permitir el ingreso.</li>
-            <li>Compare la foto del DNI con la persona presente.</li>
-            <li>No abone la totalidad del trabajo por adelantado.</li>
-        </ul>
+    <h1 class="orange">Encuentra tu Experto</h1>
+
+    <div class="consejos-box">
+        <strong>🛡️ SEGURIDAD PRIMERO:</strong> Por su protección, toda comunicación y pago debe realizarse a través de <b>Servicios Full</b>. No comparta datos personales.
     </div>
-    
-    <div class="search-box">
-        <input type="text" id="buscarCiudad" placeholder="Ciudad (Ej: Posadas)">
-        <input type="text" id="buscarOficio" placeholder="Oficio (Ej: Plomero)">
-        <button class="btn-buscar" onclick="ejecutarBusqueda()">BUSCAR AHORA</button>
+
+    <div class="search-container">
+        <input type="text" id="ciudad" placeholder="📍 ¿En qué ciudad estás?">
+        <input type="text" id="oficio" placeholder="🛠️ ¿Qué servicio buscas?">
+        <button class="btn-buscar" onclick="ejecutarBusqueda()">BUSCAR EXPERTO</button>
     </div>
 
     <div id="resultados"></div>
 
-    <a href="/" class="btn-volver">Volver al Inicio</a>
-
     <script>
         async function ejecutarBusqueda() {
-            const ciudad = document.getElementById('buscarCiudad').value.toLowerCase();
-            const oficio = document.getElementById('buscarOficio').value.toLowerCase();
-            const divResultados = document.getElementById('resultados');
-            divResultados.innerHTML = "Verificando expertos...";
+            const ciudadBusqueda = document.getElementById('ciudad').value.toLowerCase();
+            const oficioBusqueda = document.getElementById('oficio').value.toLowerCase();
+            const div = document.getElementById('resultados');
+            
+            div.innerHTML = "<p>Buscando en la red de confianza...</p>";
 
-            try {
-                const res = await fetch('/usuarios-datos');
-                const prestadores = await res.json();
+            const res = await fetch('/usuarios-datos');
+            const lista = await res.json();
 
-                const filtrados = prestadores.filter(p => 
-                    p.ciudad.toLowerCase().includes(ciudad) && 
-                    p.servicio.toLowerCase().includes(oficio) &&
-                    p.tipo === 'prestador'
-                );
+            const filtrados = lista.filter(p => 
+                p.ciudad.toLowerCase().includes(ciudadBusqueda) && 
+                p.servicio.toLowerCase().includes(oficioBusqueda) &&
+                p.tipo === 'prestador'
+            );
 
-                divResultados.innerHTML = "";
+            div.innerHTML = "";
+            filtrados.forEach(p => {
+                const statusSello = p.verificado ? 
+                    `<span class="badge-verificado">● IDENTIDAD VERIFICADA</span>` : 
+                    `<span class="badge-pendiente">⚠ EN PROCESO DE VALIDACIÓN</span>`;
 
-                if (filtrados.length === 0) {
-                    divResultados.innerHTML = "<p>No se encontraron resultados.</p>";
-                    return;
-                }
-
-                filtrados.forEach((p, index) => {
-                    const calif = p.calificacion || "Buena";
-                    
-                    // Lógica del Sello de Verificación
-                    const selloHTML = p.verificado ? 
-                        `<span style="color: #00ff00; font-size: 11px; font-weight: bold;">● IDENTIDAD VERIFICADA</span>` : 
-                        `<span style="color: #ff4444; font-size: 11px; font-weight: bold;">⚠ PERFIL EN PROCESO DE VALIDACIÓN</span>`;
-
-                    divResultados.innerHTML += `
-                        <div class="tarjeta">
-                            <span class="badge" id="badge-${index}">Sello SF: ${calif}</span>
-                            ${selloHTML}<br>
-                            <strong class="orange" style="font-size: 1.2em;">${p.nombre}</strong><br>
-                            📍 ${p.ciudad} | 📞 ${p.celular}<br>
-                            🛠️ ${p.servicio}
-                            <div class="resena-texto">"${p.resena}"</div>
-                            
-                            <div class="seccion-voto">
-                                <span style="font-size: 10px; color: #888;">CALIFICAR:</span>
-                                <button class="btn-voto" onclick="enviarVoto('${p.email}', 'Buena', ${index})">BUENA</button>
-                                <button class="btn-voto" onclick="enviarVoto('${p.email}', 'Muy Buena', ${index})">MUY BUENA</button>
-                                <button class="btn-voto" onclick="enviarVoto('${p.email}', 'Excelente', ${index})">EXCELENTE</button>
-                            </div>
-
-                            <button class="btn-reportar" onclick="reportar('${p.nombre}')">REPORTAR MALA CONDUCTA O ESTAFA</button>
-                        </div>
-                    `;
-                });
-            } catch (err) {
-                divResultados.innerHTML = "Error de conexión.";
-            }
-        }
-
-        async function enviarVoto(email, nota, idx) {
-            const response = await fetch('/calificar', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email, nuevaCalif: nota })
+                div.innerHTML += `
+                    <div class="tarjeta">
+                        ${statusSello}<br>
+                        <h3 style="margin: 10px 0 5px 0;">${p.nombre}</h3>
+                        <small>📍 ${p.ciudad} | ⭐ ${p.calificacion || 'Buena'}</small>
+                        <p style="font-size: 14px; color: #666;">"${p.resena}"</p>
+                        <button class="btn-solicitar" onclick="solicitarServicio('${p.nombre}')">SOLICITAR PRESUPUESTO</button>
+                    </div>
+                `;
             });
-            if (response.ok) {
-                alert("Calificación guardada.");
-                document.getElementById('badge-' + idx).innerText = "Sello SF: " + nota;
-            }
         }
 
-        function reportar(nombre) {
-            const motivo = prompt("¿Qué sucedió con " + nombre + "?");
-            if (motivo) {
-                alert("Gracias. El equipo de seguridad ha recibido su reporte sobre " + nombre);
-            }
+        function solicitarServicio(nombre) {
+            alert("Has solicitado un presupuesto a " + nombre + ". En breve el sistema habilitará el chat seguro.");
         }
     </script>
+
 </body>
 </html>
