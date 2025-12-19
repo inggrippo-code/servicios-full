@@ -3,118 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servicios Full - Tu Solución Confiable</title>
+    <title>Servicios Full</title>
     <style>
-        /* DISEÑO MODERNO Y CLARO */
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6; /* Fondo gris claro profesional */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        /* FONDO CON FOTOS DE SERVICIOS */
-        .background-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=2069');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.12; /* Imagen muy suave para que resalte la caja blanca */
-            z-index: -1;
-        }
-
-        /* CAJA CENTRAL */
-        .hero-card {
-            background: white;
-            padding: 50px 40px;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 450px;
-            width: 90%;
-            border: 1px solid #e0e0e0;
-        }
-
-        h1 {
-            color: #333;
-            font-size: 2.2em;
-            margin-bottom: 10px;
-            letter-spacing: -1px;
-        }
-
-        .orange-text { color: #ff6600; } /* Naranja de acción */
-
-        p {
-            color: #666;
-            font-size: 1.1em;
-            margin-bottom: 35px;
-            line-height: 1.5;
-        }
-
-        /* BOTONES */
-        .btn-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .btn {
-            padding: 16px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.05em;
-            transition: all 0.3s ease;
-            display: block;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-        }
-
-        .btn-buscar {
-            background: #ff6600;
-            color: white;
-        }
-
-        .btn-prestador {
-            background: #00a884; /* Verde confianza */
-            color: white;
-        }
-
-        .footer-text {
-            margin-top: 35px;
-            font-size: 0.85em;
-            color: #aaa;
-            border-top: 1px solid #eee;
-            padding-top: 20px;
-        }
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; max-width: 400px; width: 90%; }
+        h1 { color: #333; margin-bottom: 30px; }
+        .btn { display: block; padding: 15px 30px; margin: 15px 0; border-radius: 10px; text-decoration: none; font-weight: bold; color: white; transition: 0.3s; }
+        .btn-orange { background: #ff6600; }
+        .btn-green { background: #00a884; }
+        .btn:hover { opacity: 0.8; transform: scale(1.02); }
     </style>
 </head>
 <body>
-
-    <div class="background-overlay"></div>
-
-    <div class="hero-card">
-        <h1>SERVICIOS <span class="orange-text">FULL</span></h1>
-        <p>Conectamos tus necesidades con los mejores expertos de tu ciudad.</p>
-
-        <div class="btn-container">
-            <a href="buscar.html" class="btn btn-buscar">🔍 BUSCAR EXPERTO</a>
-            <a href="registro.html" class="btn btn-prestador">👷 SOY PRESTADOR</a>
-        </div>
-
-        <div class="footer-text">
-            🛡️ Seguridad Garantizada | ⭐ Profesionales Verificados
-        </div>
+    <div class="card">
+        <h1>SERVICIOS FULL</h1>
+        <a href="buscar.html" class="btn btn-orange">🔍 BUSCAR EXPERTO</a>
+        <a href="registro.html" class="btn btn-green">👷 SOY PRESTADOR</a>
     </div>
-
 </body>
 </html>
